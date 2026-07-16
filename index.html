@@ -3,126 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chúc Mừng Sinh Nhật! 🎉</title>
+    <title>Chúc Mừng Sinh Nhật Bà Chạ Húi! 🎉</title>
+    <!-- Nhập font chữ dễ thương và hiện đại từ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #ff9a9e, #fecfef);
-            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            font-family: 'Quicksand', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
-            color: #fff;
+            color: #2d3436;
+            position: relative;
+        }
+
+        /* Nút mở quà siêu xịn */
+        .gift-container {
             text-align: center;
+            z-index: 10;
         }
-        #start-btn {
-            padding: 15px 30px;
-            font-size: 20px;
-            font-weight: bold;
-            background-color: #ff4757;
-            color: white;
-            border: none;
-            border-radius: 25px;
+        .gift-box {
+            font-size: 80px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: 0.3s;
+            animation: bounce 1.2s infinite alternate;
+            transition: transform 0.3s ease;
+            display: inline-block;
         }
-        #start-btn:hover { transform: scale(1.1); }
-        
-        #content { display: none; flex-direction: column; align-items: center; }
-        
-        .image-container {
-            width: 320px;
-            height: 320px;
-            border-radius: 15px;
-            border: 5px solid white;
+        .gift-box:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+        .gift-text {
+            font-size: 22px;
+            font-weight: bold;
+            color: #d63031;
+            margin-top: 20px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Khung chứa nội dung chính dạng Kính mờ (Glassmorphism) */
+        #content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 24px;
+            padding: 35px 25px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 5;
+            animation: zoomIn 1s forwards;
+        }
+
+        /* Khung ảnh kiểu Polaroid cổ điển */
+        .polaroid-frame {
+            background: white;
+            padding: 12px 12px 25px 12px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: rotate(-3deg);
+            transition: transform 0.5s ease;
+            width: 280px;
+            height: 330px;
+            margin-bottom: 30px;
+        }
+        .polaroid-frame:hover {
+            transform: rotate(2deg) scale(1.05);
+        }
+        .image-wrapper {
+            width: 100%;
+            height: 250px;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            margin-bottom: 25px;
+            position: relative;
+            background: #f1f2f6;
         }
-        .image-container img {
+        .image-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
-        .image-container img.active { display: block; animation: fadeIn 1s; }
-        
+        .image-wrapper img.active {
+            opacity: 1;
+        }
+
+        /* Lời chúc */
+        .wish-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            color: #d63031;
+            margin-bottom: 15px;
+        }
         #wish-text {
-            font-size: 22px;
-            font-weight: bold;
-            line-height: 1.5;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            max-width: 80%;
-            min-height: 60px;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.6;
+            color: #2d3436;
+            min-height: 80px;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Hiệu ứng tim bay */
+        .heart {
+            position: absolute;
+            color: #ff7675;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 4s linear forwards;
+        }
+
+        /* Định nghĩa các Animation */
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) translateX(0) scale(0.5);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% {
+                transform: translateY(-10vh) translateX(100px) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <button id="start-btn" onclick="startBirthday()">Bấm vào đây để mở quà nhé! ❤️</button>
+    <!-- MÀN HÌNH NÚT MỞ QUÀ -->
+    <div class="gift-container" id="intro-screen">
+        <div class="gift-box" onclick="startBirthday()">🎁</div>
+        <div class="gift-text">Có một món quà từ tớ gửi bà chạ húi nè!<br>Bấm vào hộp quà đi! ❤️</div>
+    </div>
 
+    <!-- MÀN HÌNH CHÍNH (Sẽ hiện sau khi click) -->
     <div id="content">
-        <div class="image-container">
-            <!-- Chỉ có ảnh số 1 có chữ class="active" để hiện lên đầu tiên -->
-            <img src="anh1.jpg" class="active" alt="Kỷ niệm 1">
-            <img src="anh2.jpg" alt="Kỷ niệm 2">
-            <img src="anh3.jpg" alt="Kỷ niệm 3">
-            <img src="anh4.jpg" alt="Kỷ niệm 4">
-            <img src="anh5.jpg" alt="Kỷ niệm 5">
-            <img src="anh6.jpg" alt="Kỷ niệm 6">
-            <img src="anh7.jpg" alt="Kỷ niệm 7">
-            <img src="anh8.jpg" alt="Kỷ niệm 8">
-            <img src="anh9.jpg" alt="Kỷ niệm 9">
-            <img src="anh10.jpg" alt="Kỷ niệm 10">
+        <div class="polaroid-frame">
+            <div class="image-wrapper">
+                <!-- 10 bức ảnh của bạn -->
+                <img src="anh1.jpg" class="active" alt="Kỷ niệm 1">
+                <img src="anh2.jpg" alt="Kỷ niệm 2">
+                <img src="anh3.jpg" alt="Kỷ niệm 3">
+                <img src="anh4.jpg" alt="Kỷ niệm 4">
+                <img src="anh5.jpg" alt="Kỷ niệm 5">
+                <img src="anh6.jpg" alt="Kỷ niệm 6">
+                <img src="anh7.jpg" alt="Kỷ niệm 7">
+                <img src="anh8.jpg" alt="Kỷ niệm 8">
+                <img src="anh9.jpg" alt="Kỷ niệm 9">
+                <img src="anh10.jpg" alt="Kỷ niệm 10">
+            </div>
         </div>
+        
+        <div class="wish-title">Happy Birthday! 🎂</div>
         <div id="wish-text"></div>
     </div>
 
+    <!-- Nhạc nền -->
     <audio id="bg-music" src="nhac-nen.mp3" loop></audio>
 
     <script>
-        const images = document.querySelectorAll('.image-container img');
+        const images = document.querySelectorAll('.image-wrapper img');
         const wishText = document.getElementById('wish-text');
         
-        // BẠN CÓ THỂ THAY ĐỔI LỜI CHÚC Ở ĐÂY (Viết trong dấu ngoặc kép)
-        const fullWish = "Chúc mừng sinh nhật cậu! Ý nghĩa từng giây phút trôi qua, mong cậu luôn tươi cười rạng rỡ như những bức ảnh này nhé! ✨🎂💖";
+        // Lời chúc của bạn dành cho "bà chạ húi"
+        const fullWish = "chúc bà chạ húi sinh nhật dui dẻ, tuổi mới chăm ngoan giỏi hơn, có nhiều cột mốc đáng nhớ hơn trong khoảng thời gian lên cấp 3 tiếp theo và bên gia đình người thân. Yêu bà chạ húi nhiềuuuuu. <3";
         
         let imgIndex = 0;
         let textIndex = 0;
 
         function startBirthday() {
-            document.getElementById('start-btn').style.display = 'none';
+            // Ẩn màn hình chờ, hiện màn hình chính
+            document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('content').style.display = 'flex';
             
-            // Phát nhạc nền
-            document.getElementById('bg-music').play().catch(error => {
-                console.log("Trình duyệt chặn audio: ", error);
-            });
+            // Phát nhạc
+            document.getElementById('bg-music').play().catch(e => console.log("Lỗi nhạc: ", e));
             
-            // Chạy hiệu ứng chữ chạy từng ký tự
+            // Chạy chữ chúc mừng
             typeWriter();
             
-            // Cứ mỗi 3 giây (3000ms) sẽ tự động đổi sang ảnh tiếp theo
+            // Đổi ảnh mượt mà sau mỗi 3 giây (3000ms)
             setInterval(changeImage, 3000);
+
+            // Bắt đầu hiệu ứng tim bay liên tục
+            setInterval(createHeart, 300);
         }
 
+        // Hiệu ứng chữ chạy từng chữ một
         function typeWriter() {
             if (textIndex < fullWish.length) {
                 wishText.innerHTML += fullWish.charAt(textIndex);
                 textIndex++;
-                setTimeout(typeWriter, 80); // Tốc độ xuất hiện của chữ (80ms/chữ)
+                setTimeout(typeWriter, 70); // Tốc độ chạy chữ (70ms/chữ)
             }
         }
 
+        // Hiệu ứng chuyển ảnh (Fade out - Fade in mượt mà nhờ CSS transition)
         function changeImage() {
             images[imgIndex].classList.remove('active');
             imgIndex = (imgIndex + 1) % images.length;
             images[imgIndex].classList.add('active');
+        }
+
+        // Tạo trái tim bay ngẫu nhiên từ dưới lên
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            // Các biểu tượng tim ngẫu nhiên
+            const heartIcons = ['❤️', '💖', '💝', '💕', '🌸', '✨'];
+            heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            
+            // Vị trí ngang ngẫu nhiên
+            heart.style.left = Math.random() * 100 + 'vw';
+            // Kích thước tim ngẫu nhiên
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            // Thời gian bay ngẫu nhiên để không bị bay đều tăm tắp
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's'; 
+            
+            document.body.appendChild(heart);
+            
+            // Xóa tim sau khi bay xong để tránh làm nặng web
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
         }
     </script>
 </body>
